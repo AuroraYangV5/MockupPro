@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { LogoUploader } from './components/LogoUploader';
 import { MockupCanvas } from './components/MockupCanvas';
 import { AIImageGenerator } from './components/AIImageGenerator';
-import { PricingModal } from './components/PricingModal';
 import { GalleryModal } from './components/GalleryModal';
 import { DEFAULT_MOCKUPS } from './constants';
 import { Mockup } from './types';
@@ -92,7 +91,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] text-zinc-900 font-sans selection:bg-zinc-900 selection:text-white">
-      <PricingModal isOpen={isPricingOpen} onClose={() => setIsPricingOpen(false)} lang={lang} />
       <GalleryModal isOpen={isGalleryOpen} onClose={() => setIsGalleryOpen(false)} lang={lang} />
 
       {/* Header */}
