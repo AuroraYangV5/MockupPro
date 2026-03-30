@@ -47,7 +47,7 @@ export async function generateMockupImage(prompt: string, size: ImageSize, model
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: process.env.DOUBAO_MODAL || "doubao-vision-pro",
+        model: process.env.DOUBAO_MODAL || "ep-20260330153534-m4z8b",
         prompt: `A high-quality product mockup of ${prompt}. The product should be centered and have a clear, clean background suitable for placing a logo on it. Realistic lighting and textures.`,
         size: size === '1K' ? "1024x1024" : size === '2K' ? "2048x2048" : "4096x4096",
         n: 1
