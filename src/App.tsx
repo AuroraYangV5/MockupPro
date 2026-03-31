@@ -229,11 +229,11 @@ export default function App() {
                     className="grid grid-cols-2 gap-3 max-h-[500px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent"
                   >
                     {allMockups.map((m) => (
-                      <button
+                      <div
                         key={m.id}
                         onClick={() => setSelectedMockup(m)}
                         className={cn(
-                          "relative aspect-square rounded-xl overflow-hidden border-2 transition-all group",
+                          "relative aspect-square rounded-xl overflow-hidden border-2 transition-all group cursor-pointer",
                           selectedMockup.id === m.id ? "border-zinc-900 shadow-md" : "border-transparent hover:border-zinc-300"
                         )}
                       >
@@ -255,12 +255,12 @@ export default function App() {
                                 setSelectedMockup(DEFAULT_MOCKUPS[0]);
                               }
                             }}
-                            className="absolute top-1 right-1 p-1 bg-white/20 hover:bg-white/40 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute top-1 right-1 p-1 bg-white/20 hover:bg-white/40 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity z-20"
                           >
                             <X className="w-3 h-3 text-white" />
                           </button>
                         ) : null}
-                      </button>
+                      </div>
                     ))}
                   </motion.div>
                 ) : (

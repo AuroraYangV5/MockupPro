@@ -23,25 +23,55 @@ export function MockupCanvas({ mockup, logoUrl, lang }: MockupCanvasProps) {
 
   // Load mockup image once
   useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.src = mockup.url;
-    img.onload = () => {
-      mockupImgRef.current = img;
-      draw();
+    mockupImgRef.current = null; // Clear old image while loading new one
+    const loadImg = (useCors: boolean) => {
+      const img = new Image();
+      if (useCors) img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        mockupImgRef.current = img;
+        draw();
+      };
+      img.onerror = () => {
+        if (useCors) {
+          console.warn("Retrying mockup image load without CORS:", mockup.url);
+          loadImg(false);
+        } else {
+          console.error("Failed to load mockup image:", mockup.url);
+        }
+      };
+      img.src = mockup.url;
     };
+    loadImg(true);
   }, [mockup.url]);
+
+  // Reset canvas state when mockup changes
+  useEffect(() => {
+    setOffset({ x: 0, y: 0 });
+    setScale(1);
+    setRotation(0);
+  }, [mockup.id]);
 
   // Load logo image once
   useEffect(() => {
     if (logoUrl) {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.src = logoUrl;
-      img.onload = () => {
-        logoImgRef.current = img;
-        draw();
+      const loadLogo = (useCors: boolean) => {
+        const img = new Image();
+        if (useCors) img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          logoImgRef.current = img;
+          draw();
+        };
+        img.onerror = () => {
+          if (useCors) {
+            console.warn("Retrying logo image load without CORS:", logoUrl);
+            loadLogo(false);
+          } else {
+            console.error("Failed to load logo image:", logoUrl);
+          }
+        };
+        img.src = logoUrl;
       };
+      loadLogo(true);
     } else {
       logoImgRef.current = null;
       draw();
